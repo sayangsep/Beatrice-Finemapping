@@ -21,9 +21,10 @@ Table of contents:
  ```
  singularity pull --arch amd64 library://sayan_ghosal/finemapping/beatrice.sif:latest
  ```
- The container contains all the dependencies to run BEATRICE. Once download, goto [the usage]([#run-beatrice-using-singularity-container]) section to run BEATRICE.
+ The container contains all the dependencies to run BEATRICE. Once download, refer the section [Run BEATRICE Using Singularity Container](#run-beatrice-using-singularity-container) to learn about using BEATRICE.
  
  ### Install BEATRICE Using Anaconda
+ We have uploaded the 
  
  ### Install BEATRICE Using Python packages
  
