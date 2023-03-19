@@ -24,9 +24,27 @@ Table of contents:
  The container contains all the dependencies to run BEATRICE. Once download, refer to the section [Run BEATRICE Using Singularity Container](#run-beatrice-using-singularity-container) to learn about using BEATRICE.
  
  ### Install BEATRICE Using Anaconda
- We have uploaded the anaconda environment [`conda_environment.yml`](https://github.com/sayangsep/Beatrice-Finemapping/blob/main/conda_environment.yml)
+ We have uploaded the [anaconda](https://docs.anaconda.com/anaconda/install/index.html) environment file, [`conda_environment.yml`](https://github.com/sayangsep/Beatrice-Finemapping/blob/main/conda_environment.yml), listing all the dependencies required to run BEATRICE. The anaconda environment can be easily created by the following command:
+ ```
+ conda env create -f conda_environment.yml
+ ```
+ 
+ This will create an environment named, `beatrice_env`, which will have all the dependencies downloaded inside.  Once installed, refer to the section [Run BEATRICE Using Anaconda Environment](#run-beatrice-using-anaconda-environment) to learn about using BEATRICE using anaconda.
  
  ### Install BEATRICE Using Python packages
+ 
+ The user can also run BEATRICE with their own personal installation of python packages. The packages required for running BEATRICE are listed below:
+ 
+ - [PyTorch](https://pytorch.org/)
+ - [Absl](https://anaconda.org/anaconda/absl-py)
+ - [Matplotlib](https://matplotlib.org/stable/users/installing/index.html)
+ - [Numpy](https://numpy.org/install/)
+ - [Glob](https://pypi.org/project/glob2/)
+ - [Pickle](https://anaconda.org/conda-forge/pickle5)
+ - [Pandas](https://pandas.pydata.org/docs/getting_started/install.html)
+ - [Seaborn](https://seaborn.pydata.org/installing.html)
+ - [Imageio](https://imageio.readthedocs.io/en/v2.8.0/installation.html)
+ - [Shutil](https://anaconda.org/conda-forge/pytest-shutil)
  
  ## Usage
  
