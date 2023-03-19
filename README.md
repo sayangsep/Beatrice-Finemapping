@@ -14,6 +14,7 @@ Table of contents:
  ## Installation
  
  ### Install BEATRICE Using Singularity
+ We have uploaded the singularity container (.sif) to run BEATRICE. It is highly recommended to run BEATRICE inside the container. The container was built using [Singularity](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html). Please follow the [installation steps](https://docs.sylabs.io/guides/3.0/user-guide/installation.html) to install singularity in your system.
  
  ### Install BEATRICE Using Anaconda
  
