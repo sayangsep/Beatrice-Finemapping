@@ -29,7 +29,7 @@ Table of contents:
  conda env create -f conda_environment.yml
  ```
  
- This will create an environment named, `beatrice_env`, which will have all the dependencies downloaded inside.  Once installed, refer to the section [Run BEATRICE Using Anaconda Environment](#run-beatrice-using-anaconda-environment) to learn about using BEATRICE using anaconda.
+ This will create an environment named, `beatrice_env`, which will have all the dependencies downloaded inside.  Once installed, refer to the section [Run BEATRICE Using Anaconda Environment](#run-beatrice-using-anaconda-environment) to learn about using BEATRICE using anaconda. However, please note that this environment file is created with Linux, so it might not work with other operating systems.
  
  ### Install BEATRICE Using Python packages
  
