@@ -49,6 +49,7 @@ Table of contents:
  ## Usage
  
  ### Run BEATRICE Using Singularity Container
+ Running BEATRICE reuire two thing: a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and the LD matrix (example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
  
   ### Run BEATRICE Using Anaconda Environment
   
