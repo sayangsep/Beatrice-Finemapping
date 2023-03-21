@@ -59,7 +59,7 @@ Running BEATRICE reuqire three things, a comma sepereated file storing the z-sco
  ```
  singularity run beatrice.sif python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to z-file}```, and  the ```--LD``` flag with ```--LD {location to LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
  
 ### Run BEATRICE Using Anaconda Environment
 Running BEATRICE require three things, a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
@@ -75,7 +75,7 @@ Running BEATRICE require three things, a comma sepereated file storing the z-sco
  ```
  python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to z-file}```, and  the ```--LD``` flag with ```--LD {location to LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
   
   ### Run BEATRICE Using Python Packages
  Running BEATRICE require three things, a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
@@ -87,6 +87,6 @@ Running BEATRICE require three things, a comma sepereated file storing the z-sco
  ```
  python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to z-file}```, and  the ```--LD``` flag with ```--LD {location to LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
  
  ## Miscellaneous
