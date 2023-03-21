@@ -47,11 +47,35 @@ Table of contents:
  - [Shutil](https://anaconda.org/conda-forge/pytest-shutil)
  
  ## Usage
- 
+ Download the github repo (https://github.com/sayangsep/Beatrice-Finemapping.git) to your local machine and goto that folder. 
  ### Run BEATRICE Using Singularity Container
- Running BEATRICE reuire two thing: a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and the LD matrix (example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
  
-  ### Run BEATRICE Using Anaconda Environment
+Running BEATRICE reuire three things, a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
+ 
+ Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
+  - Goto the folder where the github repo is downloaded.
+ - Dowload and [the singularity container]((#install-beatrice-using-singularity)) and move it inside the Beatrice-Finemapping folder.
+ - Run BEATRICE as, 
+ ```
+ singularity run beatrice.sif python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
+ ```
+ While running on a different data replace the ```--z``` flag with ```--z {location to z-file}```, and  the ```--LD``` flag with ```--LD {location to LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ 
+### Run BEATRICE Using Anaconda Environment
+Running BEATRICE require three things, a comma sepereated file storing the z-scores, a comma seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, where the first columns is the name of the variants and the second column is the z-scores. 
+ 
+ Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
+ - Goto the folder where the github repo is downloaded.
+ 
+ - Install [the anaconda environment]((#install-beatrice-using-singularity)) and start it as,
+ ```
+ conda activate beatrice_env
+ ```
+ - Run BEATRICE as, 
+ ```
+ python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
+ ```
+ While running on a different data replace the ```--z``` flag with ```--z {location to z-file}```, and  the ```--LD``` flag with ```--LD {location to LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
   
   ### Run BEATRICE Using Python Packages
  
