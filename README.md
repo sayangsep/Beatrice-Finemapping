@@ -125,7 +125,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--gamma```: The $\gamma$ threshold creates the reduced space of binary vectors $B^R$ (default: 0.1).
 - ```--gamma_coverage```: $\gamma_{coverage}$ controls the threshold for coverage (default: 0.95).
 - ```--gamma_key```: $\gamma_{key}$ is the threshold for adding key variants (default: 0.2).
-- ```--gamma_selection```: $\gamma_{selection}$ controls the threshold to add variants to a credible set (default: 0.05).
+- ```--gamma_selection```: It controls the threshold to add variants to a credible set (default: 0.05).
 - ```MCMC_samples```: Number of random samples for MC integration (default: 1).
 - ```--[no]get_cred```: A flag to generate credible sets (default: 'true').
 - ```--max_iter```: Number of training iterations (default: 2001).
