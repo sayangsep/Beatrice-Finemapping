@@ -2,9 +2,11 @@
 
 In this repository, we introduce BEATRICE, a finemapping tool to identify putative causal variants from GWAS summary data. BEATRICE combines a hierarchical Bayesian model with a deep learning-based inference procedure. This combination provides greater inferential power to handle noise and spurious interactions due to polygenicity of the trait, trans-interactions of variants, or varying correlation structure of the genomic region. 
 
+<img src="modular.png" alt="drawing" width="900"/>
 
+Overview of BEATRICE. The inputs to our framework are the LD matrix  and the summary statistics. The inference module uses a neural network to estimate the underlying parameters. The random process generates random samples for the Monte Carlo integration. Finally, the generative module calculates the likelihood of the summary statistics from the sample causal vectors $\mathbf{c}^l$.
 
-Table of contents:
+### Table of contents:
 
  - [Installation](#installation)
     - [Install using Singularity](#install-beatrice-using-singularity)
