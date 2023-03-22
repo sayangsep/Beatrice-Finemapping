@@ -117,3 +117,48 @@ Tha availeble flags used in running BEATRICE can be found by one of the followin
  python beatrice.py --help
  ```
 
+--LD: Location of LD matrix
+    (default: 'example_data/Simulation_data0.ld')
+  --MCMC_samples: Number of random samples for MC integration
+    (default: '1')
+    (a positive integer)
+  --N: Number of subjects.
+    (default: '5000')
+    (a non-negative integer)
+  --gamma: Threshold to create the reduced space of binary vectors B^R.
+    (default: '0.1')
+    (a number)
+  --gamma_coverage: Threshold for key variants.
+    (default: '0.95')
+    (a number)
+  --gamma_key: Threshold for key variants.
+    (default: '0.2')
+    (a number)
+  --gamma_selection: Threshold for selection probability within a credible set.
+    (default: '0.05')
+    (a number)
+  --[no]get_cred: Get Credible Sets
+    (default: 'true')
+  --max_iter: Number of training iterations.
+    (default: '2001')
+    (integer >= 500)
+  --[no]plot_loss: Plot training losses.
+    (default: 'true')
+  --prior_location: Location where priors of the underlying probability map of bianry concrete distribution is stored.
+    (default: '')
+  --sigma_sq: Variance of causal variants
+    (default: '0.05')
+    (a number)
+  --sparse_concrete: Number of non zero locatons of the concrete random vector at every iteration.
+    (default: '50')
+    (integer >= 49)
+  --target: Location to store results.
+    (default: 'results')
+  --temp_lower_bound: Extent of continuous relaxations
+    (default: '0.01')
+    (number >= 0.005)
+  --true_loc: Index of true causal variants.
+    (default: '')
+    (a comma separated list)
+  --z: Location of Z Score
+    (default: 'example_data/Simulation_data0.z')
