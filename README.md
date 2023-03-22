@@ -73,7 +73,7 @@ Running BEATRICE require three things, a 'space' sepereated file storing the z-s
  ```
  - Run BEATRICE as, 
  ```
- python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
+ python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000  --target results
  ```
  While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
   
@@ -85,8 +85,11 @@ Running BEATRICE require three things, a 'space' sepereated file storing the z-s
  
  - Run BEATRICE as, 
  ```
- python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
+ python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000  --target results
  ```
  While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
  
  ## Description of the output files
+ If the user has ran BEATRICE in the format described in the previous section, then it will create a ```results``` folder where the outputs will be stored.
+ The output results in a pdf file displaying the PIPs and overlaying credible sets, a table with PIPs, a text file with credible sets, and a text file with the conditional inclusion probability of the variants within the credible sets.
+ 
