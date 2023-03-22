@@ -2,6 +2,8 @@
 
 In this repository, we introduce BEATRICE, a finemapping tool to identify putative causal variants from GWAS summary data. BEATRICE combines a hierarchical Bayesian model with a deep learning-based inference procedure. This combination provides greater inferential power to handle noise and spurious interactions due to polygenicity of the trait, trans-interactions of variants, or varying correlation structure of the genomic region. 
 
+
+
 Table of contents:
 
  - [Installation](#installation)
@@ -13,6 +15,7 @@ Table of contents:
     - [Using Anaconda](#run-beatrice-using-anaconda-environment)
     - [Using Python](#run-beatrice-using-anaconda-environment)
  - [Outputs of BEATRICE](#description-of-the-output-files)
+ - [Flags](#flags-of-beatrice)
  
  ## Installation
  
@@ -101,4 +104,16 @@ Running BEATRICE require three things, a 'space' sepereated file storing the z-s
  ```
  singularity run beatrice.sif python beatrice.py --plot_loss True --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000 --target results
  ```
- 
+ ### Flags of BEATRICE
+A brief description of the flags and their use for running BEATRICE.
+
+Tha availeble flags used in running BEATRICE can be found by one of the following commands:
+
+ ```
+ singularity run beatrice.sif python beatrice.py --help
+ ```
+ OR
+  ```
+ python beatrice.py --help
+ ```
+
