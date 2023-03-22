@@ -12,7 +12,7 @@ Table of contents:
     - [Using Container](#run-beatrice-using-singularity-container)
     - [Using Anaconda](#run-beatrice-using-anaconda-environment)
     - [Using Python](#run-beatrice-using-anaconda-environment)
- - [Miscellaneous](#miscellaneous)
+ - [Outputs of BEATRICE](#description-of-the-output-files)
  
  ## Installation
  
@@ -57,12 +57,12 @@ Running BEATRICE reuqire three things, a 'space' sepereated file storing the z-s
  - Dowload and [the singularity container]((#install-beatrice-using-singularity)) and move it inside the Beatrice-Finemapping folder.
  - Run BEATRICE as, 
  ```
- singularity run beatrice.sif python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
+ singularity run beatrice.sif python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000 --target results
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
  
 ### Run BEATRICE Using Anaconda Environment
-Running BEATRICE require three things, a 'space' sepereated file storing the z-scores, a 'space' seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, the first columns is the name of the variants and the second column is the z-scores. 
+Running BEATRICE require three things, a 'space' sepereated file storing the z-scores, a 'space' seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The z-scores file should contain two columns, the first columns is the name of the variants and the second column is the z-scores. 
  
  Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
  - Goto the folder where the github repo is downloaded.
@@ -75,7 +75,7 @@ Running BEATRICE require three things, a 'space' sepereated file storing the z-s
  ```
  python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
   
   ### Run BEATRICE Using Python Packages
  Running BEATRICE require three things, a 'space' sepereated file storing the z-scores, a 'space' seperated file storing the LD matrix and number of subjects used to run the GWAS. As an example we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns, the first columns is the name of the variants and the second column is the z-scores. 
@@ -87,6 +87,6 @@ Running BEATRICE require three things, a 'space' sepereated file storing the z-s
  ```
  python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000
  ```
- While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, and the ```--N``` flag with ```--N {number of subjects}```.
+ While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
  
- ## Miscellaneous
+ ## Description of the output files
