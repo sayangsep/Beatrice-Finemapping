@@ -20,7 +20,7 @@ flags.DEFINE_float('gamma_coverage', 0.95, 'Threshold for coverage.')
 flags.DEFINE_float('gamma_selection', 0.05, 'Threshold for selection probability within a credible set.')
 flags.DEFINE_float('sigma_sq', 0.05, 'Variance of causal variants')
 flags.DEFINE_float('temp_lower_bound', 0.01, 'Extent of continuous relaxations', lower_bound=0.005)
-flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the concrete random vector at every iteration.', lower_bound=49)
+flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the concrete random vector at every iteration.', lower_bound=1)
 flags.DEFINE_list('true_loc', '', 'Index of true causal variants.')
 
 
