@@ -59,7 +59,7 @@ Running BEATRICE reuqire three things, a 'space' sepereated file storing the z-s
  
  Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
   - Goto the folder where the github repo is downloaded.
- - Dowload and [the singularity container]((#install-beatrice-using-singularity)) and move it inside the Beatrice-Finemapping folder.
+ - Dowload [the singularity container]((#install-beatrice-using-singularity)) and move it inside the Beatrice-Finemapping folder.
  - Run BEATRICE as, 
  ```
  singularity run beatrice.sif python beatrice.py --z example_data/Simulation_data0.z --LD example_data/Simulation_data0.ld --N 5000 --target results
