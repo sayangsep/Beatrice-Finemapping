@@ -26,7 +26,7 @@ Overview of BEATRICE. The inputs to our framework are the LD matrix  and the sum
  ```
  singularity pull --arch amd64 library://sayan_ghosal/finemapping/beatrice.sif:latest
  ```
- The container contains all the dependencies to run BEATRICE. Once download, refer to the section [Run BEATRICE Using Singularity Container](#run-beatrice-using-singularity-container) to learn about using BEATRICE.
+ The container contains all the dependencies to run BEATRICE. Once downloaded, refer to the section [Run BEATRICE Using Singularity Container](#run-beatrice-using-singularity-container) to learn about using BEATRICE.
  
  ### Install BEATRICE Using Anaconda
  We have uploaded the [anaconda](https://docs.anaconda.com/anaconda/install/index.html) environment file, [`conda_environment.yml`](https://github.com/sayangsep/Beatrice-Finemapping/blob/main/conda_environment.yml), listing all the dependencies required to run BEATRICE. The anaconda environment can be easily created by the following command:
