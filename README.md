@@ -55,7 +55,7 @@ Overview of BEATRICE. The inputs to our framework are the LD matrix  and the sum
  Download the github repo (https://github.com/sayangsep/Beatrice-Finemapping.git) to your local machine and goto that folder. 
  ### Run BEATRICE Using Singularity Container
  
-Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and number of subjects used to run the GWAS. As an example, we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
+Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and number of subjects used to run the GWAS. As an example, we have provided a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
  
  Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
   - Goto the folder where the github repo is downloaded.
@@ -67,7 +67,7 @@ Running BEATRICE requires three things, a 'space' separated file storing the z-s
  While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
  
 ### Run BEATRICE Using Anaconda Environment
-Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and the number of subjects used to run the GWAS. As an example, we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The z-scores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
+Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and the number of subjects used to run the GWAS. As an example, we have provided a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The z-scores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
  
  Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
  - Goto the folder where the github repo is downloaded.
@@ -83,7 +83,7 @@ Running BEATRICE requires three things, a 'space' separated file storing the z-s
  While running on a different data replace the ```--z``` flag with ```--z {location to the z-file}```, and  the ```--LD``` flag with ```--LD {location to the LD file}```, the ```--N``` flag with ```--N {number of subjects}```, and the ```--target``` flag with ```--target {location to store results}```.
   
   ### Run BEATRICE Using Python Packages
- Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and the number of subjects used to run the GWAS. As an example, we have proved a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
+ Running BEATRICE requires three things, a 'space' separated file storing the z-scores, a 'space' separated file storing the LD matrix, and the number of subjects used to run the GWAS. As an example, we have provided a file containing [the zcores](example_data/Simulation_data0.z) and [the LD matrix](example_data/Simulation_data0.ld). The zscores file should contain two columns; the first column is the name of the variants, and the second column is the z-scores. 
  
  Once the files are in the above-mentioned format you can run BEATRIC using singularity by taking the following steps:
  - Goto the folder where the github repo is downloaded.
