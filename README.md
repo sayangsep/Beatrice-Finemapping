@@ -124,7 +124,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--z```: Location of Z Score (default: 'example_data/Simulation_data0.z').
 - ```--LD```: Location of LD matrix (default: 'example_data/Simulation_data0.ld').
 - ```--N```: Number of subjects (default: 5000).
-- ```--n_causal```: Number of causal variants (default: 1).
+- ```--n_caus```: Number of causal variants (default: 1).
 - ```--gamma```: The $\gamma$ threshold creates the reduced space of binary vectors $B^R$ (default: 0.1).
 - ```--gamma_coverage```: $\gamma_{coverage}$ controls the threshold for coverage (default: 0.95).
 - ```--gamma_key```: $\gamma_{key}$ is the threshold for adding key variants (default: 0.2).
