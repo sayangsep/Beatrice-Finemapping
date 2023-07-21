@@ -13,6 +13,7 @@ flags.DEFINE_integer('N', 5000, 'Number of subjects.', lower_bound=0)
 flags.DEFINE_integer('MCMC_samples', 1, 'Number of random samples for MC integration', lower_bound=1)
 flags.DEFINE_integer('max_iter', 2001, 'Number of training iterations.',lower_bound=500)
 flags.DEFINE_boolean('plot_loss', True, 'Plot training losses.')
+flags.DEFINE_boolean('allow_dup', False, 'Allow duplicate variants across credible sets')
 flags.DEFINE_boolean('get_cred', True, 'Get Credible Sets')
 flags.DEFINE_float('gamma', 0.1, 'Threshold to create the reduced space of binary vectors B^R.')
 flags.DEFINE_float('gamma_key', 0.2, 'Threshold for key variants.')
@@ -20,7 +21,8 @@ flags.DEFINE_float('gamma_coverage', 0.95, 'Threshold for coverage.')
 flags.DEFINE_float('gamma_selection', 0.05, 'Threshold for selection probability within a credible set.')
 flags.DEFINE_float('sigma_sq', 0.05, 'Variance of causal variants')
 flags.DEFINE_float('temp_lower_bound', 0.01, 'Extent of continuous relaxations', lower_bound=0.005)
-flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the concrete random vector at every iteration.', lower_bound=1)
+flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the concrete random vector at every iteration.', lower_bound=10)
+flags.DEFINE_integer('n_caus', 50, 'Number of causal variants', lower_bound=1)
 flags.DEFINE_list('true_loc', '', 'Index of true causal variants.')
 
 
@@ -35,7 +37,9 @@ def main(argv):
     
     if not os.path.exists(FLAGS.target):
         os.makedirs(FLAGS.target)
-    options = {}    
+    options = {}  
+    options['n_causal'] = FLAGS.n_caus
+    options['allow_duplicates'] = FLAGS.allow_dup
     options['target'] = FLAGS.target
     options['z'] = FLAGS.z
     options['LD'] = FLAGS.LD

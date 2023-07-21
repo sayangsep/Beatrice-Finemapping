@@ -39,6 +39,35 @@ def cond_prob(M, K, bp):
     
     return pip
 
+def find_cond_prob_constrained_causal_no_dup(given, n_caus, M, bp, cred_set):
+    
+    cred = []
+    for c in cred_set:
+        cred+=c
+        
+    total = 0
+    ss = given[:]
+    p = np.array([0]*bp)
+    
+    for k in M:
+        tag = True
+        # for cr in cred_set:
+        #     if len(np.intersect1d(cr,k))!=1:
+        #         tag = False
+        if tag:
+            if all([s in k for s in ss]):
+                total+=M[k]
+                for kk in k:
+                    if kk not in given and kk not in cred:                   
+                        p[kk] += M[k]
+        
+   
+    p = p/total
+    
+    p = p.squeeze()
+    index_max = np.argmax(p)
+    
+    return index_max, p[index_max],p 
 
 def find_cond_prob_constrained_causal(given, n_caus, M, bp):
     
@@ -62,7 +91,7 @@ def find_cond_prob_constrained_causal(given, n_caus, M, bp):
     return index_max, p[index_max],p 
 
 
-def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq, p0, S, bp):
+def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup):
     """ Create key set.
     """
     
@@ -70,19 +99,24 @@ def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq
         
     start_set = sorted(ind[:1])
     
-    for nn in range(prior_causal):
+    for nn in range(prior_causal-1):
+    
         
         add(M, Z, LD, n_sub, sigma_sq, p0, S, start_set, range(bp))
-        new_index_snp, index_prob,_ = find_cond_prob_constrained_causal(start_set, nn+2, M, bp)
+        if allow_dup:
+            new_index_snp, index_prob,_ = find_cond_prob_constrained_causal(start_set, nn+2, M, bp)
+        else:
+            new_index_snp, index_prob,_ = find_cond_prob_constrained_causal_no_dup(start_set, nn+2, M, bp, [])
         if index_prob>threshold:
             start_set.append(new_index_snp)
             start_set = sorted(start_set)
         else:
             return sorted(start_set)
+    return sorted(start_set)
     
 
                 
-def find_credible_set(LD, M, start_set, bp, ths, prob_ths):
+def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup):
     cred_prob = []
     cred_set =  []
     start_set = list(start_set)
@@ -99,7 +133,11 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths):
         p_set = []
         
         # posterior cond prob.
-        _,_, p = find_cond_prob_constrained_causal(ss, 0, M, bp)
+        if allow_dup:
+            _,_, p = find_cond_prob_constrained_causal(ss, 0, M, bp)
+        else:
+           
+            _,_, p = find_cond_prob_constrained_causal_no_dup(ss, 0, M, bp, cred_set)
         
         ind_cred = np.argsort(p)[::-1]
         
@@ -122,8 +160,8 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths):
         LLD =np.abs(cpu(LLD).data.numpy())
         #if np.min(LLD)>0.5:        
         
-        cred_set  += [cr_set]
-        cred_prob += [p_set]
+        cred_set.append(cr_set)
+        cred_prob.append(p_set)
     return cred_set, cred_prob
 
 
@@ -269,9 +307,10 @@ def main(options):
     ###############################################################################################################################################
     pip = calculate_pip(m, bp)
     threshold_causal = options['key_thres']
-    prior_n_causal   = 50
+    prior_n_causal   = options['n_causal'] 
     n_sub = options['n_sub']
-    start_set = cond_stepwise_causal(m, pip, prior_n_causal, threshold_causal, Z, LD, n_sub, sigma_sq, p0, S, bp)
+    allow_dup = options['allow_duplicates']
+    start_set = cond_stepwise_causal(m, pip, prior_n_causal, threshold_causal, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup)
                     
     ######################################################
     
@@ -283,7 +322,7 @@ def main(options):
     ######################################################
     ths = options['coverage_ths']
     prob_ths = options['selection_prob']
-    cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths)
+    cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths, allow_dup)
     
     
     cred_str = []
