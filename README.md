@@ -139,4 +139,4 @@ The following flags can be used to control the performance of BEATRICE:
  - ```--target```: Location to store results (default: results).
  - ```--temp_lower_bound```: The temperature variable, $\lambda$, that controls the extent of continuous relaxations (default: 0.01).
  - ```--true_loc```: A comma separated list that contains the index of true causal variants (default: None).
- - - ```--allow_dup```: Allow duplicate variants across credible sets (default: False).
+ - ```--allow_dup```: Allow duplicate variants across credible sets (default: False).
