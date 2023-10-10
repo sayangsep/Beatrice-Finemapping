@@ -317,7 +317,11 @@ def regularize_ld(LD):
 def main(options):    
     """
     options: A dictionary of hyper-parameters. 
+    
+    
     """
+    
+    # start_time = time.time()
     ###################
     # Creat a folder to store figures.
     fig_location = os.path.join(options['target'],'figures')
@@ -327,6 +331,7 @@ def main(options):
     ###################
     try:
         names = list(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,0])
+        options['names'] = names
         Z  = gpu_t(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,1].astype(float))
         LD = gpu_t(pd.read_table(options['LD'], sep=' ', header=None).to_numpy())
     
@@ -354,7 +359,7 @@ def main(options):
     sigma_sq =  options['sigma_sq']    
     n_epochs = options['max_iter']
     temp_lower_bound = gpu_ts(options['temp_lower_bound'])
-    K_C = options['sparsity_cl']
+    K_C = min(bp,options['sparsity_cl'])
     gamma_sp = options['gamma']
     num_iter = 1
     
@@ -439,14 +444,20 @@ def main(options):
             plt.close()
             
             
+
+    if options['get_cred']:
+        gen_cred.main(options) 
     df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':names}
     df = pd.DataFrame(df)
     df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
     
-    if options['get_cred']:
-        gen_cred.main(options) 
     
+    # finish_time = time.time()
     
+    # f = open(os.path.join(options['target'],'time'),'w')
+    # f.write(str(finish_time-start_time))
+    # f.close()    
+
 
 
     

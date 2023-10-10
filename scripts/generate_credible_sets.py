@@ -9,6 +9,7 @@ from scripts.convert_to_gpu_and_tensor import gpu_t
 from scripts.convert_to_gpu_scalar import gpu_ts
 from scripts.convert_to_cpu import cpu
 import os
+
 matplotlib.use('Agg')
 
 def save_object(obj, filename):
@@ -44,7 +45,7 @@ def find_cond_prob_constrained_causal_no_dup(given, n_caus, M, bp, cred_set):
     cred = []
     for c in cred_set:
         cred+=c
-        
+    cred = set(cred)    
     total = 0
     ss = given[:]
     p = np.array([0]*bp)
@@ -307,7 +308,7 @@ def main(options):
     ###############################################################################################################################################
     pip = calculate_pip(m, bp)
     threshold_causal = options['key_thres']
-    prior_n_causal   = options['n_causal'] 
+    prior_n_causal   = min(bp,options['n_causal'] )
     n_sub = options['n_sub']
     allow_dup = options['allow_duplicates']
     start_set = cond_stepwise_causal(m, pip, prior_n_causal, threshold_causal, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup)
@@ -329,7 +330,6 @@ def main(options):
     df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':options['names']}
     df = pd.DataFrame(df)
     df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
-    
     
     cred_str = []
     for item in cred_set:
