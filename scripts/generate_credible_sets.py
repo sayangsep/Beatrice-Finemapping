@@ -188,7 +188,7 @@ def abf( z, ld, memo, n_sub, sigma_sq, p0, ind, S):
             prior = 1 - p0
             prior[ind] = p0[ind]
         
-            res =  min(torch.tensor(10**15),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) )) 
+            res =  min(torch.tensor(10**10),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) )) 
         
         
             memo[ind_m] = cpu(res).data.numpy()

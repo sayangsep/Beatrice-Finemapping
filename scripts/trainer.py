@@ -144,7 +144,7 @@ class finemapper():
             prior = 1 - p0
             prior[ind] = p0[ind]
         
-            res =  min(torch.tensor(10**15),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) ))
+            res =  min(torch.tensor(10**10),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) ))
         
         
             memo[ind_m] = cpu(res).data.numpy()
@@ -444,12 +444,16 @@ def main(options):
             plt.close()
             
             
-
+            
     if options['get_cred']:
         gen_cred.main(options) 
-    df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':names}
-    df = pd.DataFrame(df)
-    df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
+        
+    else:
+        df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':names}
+        df = pd.DataFrame(df)
+        df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
+   
+        
     
     
     # finish_time = time.time()
