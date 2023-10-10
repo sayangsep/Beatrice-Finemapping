@@ -439,12 +439,13 @@ def main(options):
             plt.close()
             
             
-
-    if options['get_cred']:
-        gen_cred.main(options) 
     df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':names}
     df = pd.DataFrame(df)
     df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
+    
+    if options['get_cred']:
+        gen_cred.main(options) 
+    
     
 
 

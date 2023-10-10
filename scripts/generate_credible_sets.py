@@ -324,6 +324,12 @@ def main(options):
     prob_ths = options['selection_prob']
     cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths, allow_dup)
     
+    pip = calculate_pip(m, bp)
+    
+    df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':options['names']}
+    df = pd.DataFrame(df)
+    df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
+    
     
     cred_str = []
     for item in cred_set:
