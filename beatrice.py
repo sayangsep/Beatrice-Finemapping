@@ -24,7 +24,7 @@ flags.DEFINE_float('temp_lower_bound', 0.01, 'Extent of continuous relaxations',
 flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the concrete random vector at every iteration.', lower_bound=10)
 flags.DEFINE_integer('n_caus', 50, 'Number of causal variants', lower_bound=1)
 flags.DEFINE_list('true_loc', '', 'Index of true causal variants.')
-
+flags.DEFINE_float('purity', 0, 'Purity')
 
 def main(argv):
     if not os.path.exists(FLAGS.z):
@@ -38,6 +38,7 @@ def main(argv):
     if not os.path.exists(FLAGS.target):
         os.makedirs(FLAGS.target)
     options = {}  
+    options['purity'] = FLAGS.purity
     options['n_causal'] = FLAGS.n_caus
     options['allow_duplicates'] = FLAGS.allow_dup
     options['target'] = FLAGS.target

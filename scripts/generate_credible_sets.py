@@ -117,7 +117,7 @@ def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq
     
 
                 
-def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup):
+def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup, options):
     cred_prob = []
     cred_set =  []
     start_set = list(start_set)
@@ -152,13 +152,16 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup):
                 break
             else:                
                 if it != s1 and p[it]>prob_ths:
-                    cr_set.append(it)
-                    p_set.append(np.round(p[it], decimals=3))
-                    prob += p[it]
+                    
+                    if np.min(np.abs(cpu(LD[cr_set, it]).data.numpy()))> options['purity']:
+                        cr_set.append(it)
+                        p_set.append(np.round(p[it], decimals=3))
+                        prob += p[it]
         
         LLD  = LD[:,cr_set]
         LLD = LLD[cr_set,:]
         LLD =np.abs(cpu(LLD).data.numpy())
+        print('Purity = ', LLD)
         #if np.min(LLD)>0.5:        
         
         cred_set.append(cr_set)
@@ -300,7 +303,7 @@ def main(options):
     except:    
         p0 = gpu_t(np.array([1/len(Z)]*len(Z)))
         
-    sigma_sq =  gpu_ts(0.22)**2
+    sigma_sq =  gpu_ts(options['sigma_sq'])
     bp = len(Z)
     m = load_object(os.path.join(options['target'],'res'))['memo']
     
@@ -323,7 +326,7 @@ def main(options):
     ######################################################
     ths = options['coverage_ths']
     prob_ths = options['selection_prob']
-    cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths, allow_dup)
+    cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths, allow_dup, options)
     
     pip = calculate_pip(m, bp)
     
