@@ -20,8 +20,11 @@ import seaborn as sn
 from tqdm.auto import tqdm
 import scripts.generate_credible_sets as gen_cred
 import pandas as pd
+import time
 
 matplotlib.use('Agg')
+
+
 
 def save_object(obj, filename):
     with open(filename, 'wb') as output:  # Overwrites any existing file.
@@ -126,6 +129,8 @@ class finemapper():
         
         ind = sorted(id_sort[cpu(torch.where(cc_t>eps)[0]).data.numpy()])
         ind_m  = tuple(ind)
+        cc = gpu(torch.ones(len(z)))
+        
         if len(ind)>0:
             if ind_m in memo:
                 return memo[ind_m]
@@ -144,7 +149,7 @@ class finemapper():
             prior = 1 - p0
             prior[ind] = p0[ind]
         
-            res =  min(torch.tensor(10**10),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) ))
+            res =  -torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) 
         
         
             memo[ind_m] = cpu(res).data.numpy()
@@ -313,7 +318,12 @@ def regularize_ld(LD):
     return LD
     
     
-#def main(data_id, setting_id, n_samples, pp, t1, t2, param_id, dtype):
+def reformat_memo(memo):
+    m0 = np.mean([val for val in memo.values()])
+    for key in memo:
+        memo[key] = min(10**15,np.exp(min(np.log(10**15),memo[key]-m0)))
+    return m0
+    
 def main(options):    
     """
     options: A dictionary of hyper-parameters. 
@@ -321,7 +331,7 @@ def main(options):
     
     """
     
-    # start_time = time.time()
+    start_time = time.time()
     ###################
     # Creat a folder to store figures.
     fig_location = os.path.join(options['target'],'figures')
@@ -333,6 +343,10 @@ def main(options):
         names = list(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,0])
         options['names'] = names
         Z  = gpu_t(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,1].astype(float))
+        if torch.max(Z)==torch.inf:
+            print('Z vector has inf as an element, converting it to 200')
+            Z[torch.where(Z==torch.inf)[0]] = 200
+            
         LD = gpu_t(pd.read_table(options['LD'], sep=' ', header=None).to_numpy())
     
     except BaseException as be:
@@ -396,13 +410,14 @@ def main(options):
         Loss_kl.extend(ll_kl)
         
             
-        if n%500==0 and n>0:        
-                res_to_save={'loss':Loss,'lik_loss':Loss_lik,'kl_loss':Loss_kl, 'imp':F_map.model.imp,'loc':loc, 'pip':pip,'memo':memo}               
-                pip = calculate_pip(memo, bp)  
-                save_object(res_to_save, os.path.join(options['target'],'res'))
+        if n==n_epochs:  
+            mean_memo = reformat_memo(memo)
+            res_to_save={'loss':Loss,'lik_loss':Loss_lik,'kl_loss':Loss_kl, 'imp':F_map.model.imp,'loc':loc, 'pip':pip,'memo':memo, 'mean_memo':mean_memo}               
+            pip = calculate_pip(memo, bp)  
+            save_object(res_to_save, os.path.join(options['target'],'res'))
                 
         
-        if n%500==0 and n>0 and options['plot_loss']:
+        if (n%100==0 and n>0 and options['plot_loss'])or (n==n_epochs):
             real = np.zeros(len(Z))
             if len(options['loc_true'])!=0:
                 real[loc] = 1
@@ -444,28 +459,51 @@ def main(options):
             plt.close()
             
             
-            
+
     if options['get_cred']:
         gen_cred.main(options) 
-        
     else:
         df = {'variant_index':list(range(bp)),'pip':pip, 'variant_names':names}
         df = pd.DataFrame(df)
         df.to_csv(os.path.join(options['target'],'pip.csv'), index=False)
-   
-        
     
     
-    # finish_time = time.time()
+    finish_time = time.time()
     
-    # f = open(os.path.join(options['target'],'time'),'w')
-    # f.write(str(finish_time-start_time))
-    # f.close()    
+    f = open(os.path.join(options['target'],'time'),'w')
+    f.write(str(finish_time-start_time))
+    f.close()    
 
 
 
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     
     
     

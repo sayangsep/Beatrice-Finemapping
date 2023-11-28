@@ -12,17 +12,15 @@ import os
 
 matplotlib.use('Agg')
 
+
 def save_object(obj, filename):
     with open(filename, 'wb') as output:  # Overwrites any existing file.
         pickle.dump(obj, output, 4)
         
 def load_object(filename):
-    with open(filename, 'rb') as input:  # Overwrites any existing file.
+    with open(filename, 'rb') as input:   # Overwrites any existing file.
         obj = pickle.load(input)
     return obj
-
-
-
 
 
 def cond_prob(M, K, bp):
@@ -92,7 +90,8 @@ def find_cond_prob_constrained_causal(given, n_caus, M, bp):
     return index_max, p[index_max],p 
 
 
-def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup):
+def cond_stepwise_causal(M, mean_memo, pip, prior_causal, threshold, Z, LD,\
+                         n_sub, sigma_sq, p0, S, bp, allow_dup):
     """ Create key set.
     """
     
@@ -100,20 +99,23 @@ def cond_stepwise_causal(M, pip, prior_causal, threshold, Z, LD, n_sub, sigma_sq
         
     start_set = sorted(ind[:1])
     
-    for nn in range(prior_causal-1):
-    
+    for nn in range(prior_causal-1):    
         
-        add(M, Z, LD, n_sub, sigma_sq, p0, S, start_set, range(bp))
+        add(M, mean_memo, Z, LD, n_sub, sigma_sq, p0, S, sorted(start_set[:]), range(bp))
+        
         if allow_dup:
             new_index_snp, index_prob,_ = find_cond_prob_constrained_causal(start_set, nn+2, M, bp)
+            
         else:
+            
             new_index_snp, index_prob,_ = find_cond_prob_constrained_causal_no_dup(start_set, nn+2, M, bp, [])
+            
         if index_prob>threshold:
             start_set.append(new_index_snp)
-            start_set = sorted(start_set)
+            #start_set = sorted(start_set)
         else:
-            return sorted(start_set)
-    return sorted(start_set)
+            return start_set#sorted(start_set)
+    return start_set        #sorted(start_set)
     
 
                 
@@ -121,9 +123,9 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup, options):
     cred_prob = []
     cred_set =  []
     start_set = list(start_set)
-
+    # cred = []
     
-    for i, s1 in enumerate(start_set):
+    for i, s1 in enumerate(start_set)  :         
 
         ss = start_set[:]
         ss.pop(i)
@@ -148,6 +150,7 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup, options):
         prob = p[s1]
         
         for it in ind_cred:
+                
             if prob > ths:
                 break
             else:                
@@ -161,7 +164,7 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup, options):
         LLD  = LD[:,cr_set]
         LLD = LLD[cr_set,:]
         LLD =np.abs(cpu(LLD).data.numpy())
-        print('Purity = ', LLD)
+       # print('Purity = ', LLD)
         #if np.min(LLD)>0.5:        
         
         cred_set.append(cr_set)
@@ -169,40 +172,56 @@ def find_credible_set(LD, M, start_set, bp, ths, prob_ths, allow_dup, options):
     return cred_set, cred_prob
 
 
-def abf( z, ld, memo, n_sub, sigma_sq, p0, ind, S):
-        z = z.unsqueeze(1)
-        ind_m  = tuple(ind)
-        cc = gpu(torch.ones(len(z)))
-        if len(ind)>0:
-            if ind_m in memo:
-                return memo[ind_m]
-        
-            U =  n_sub*torch.diag(sigma_sq*cc)[:,ind]
-            V = ld[ind,:]
-                
-            inv            = torch.inverse(gpu(torch.eye(len(ind))) + torch.mm(V,U))
-                
-            sigma_inv      = torch.mm(torch.mm(U,inv),V)
-                
-            sigma          = gpu(torch.eye(len(ind))) + torch.mm(V,U)
-                
-            sigma2         = torch.matmul(torch.matmul(z.T, sigma_inv),S)/2
-            
-            prior = 1 - p0
-            prior[ind] = p0[ind]
-        
-            res =  min(torch.tensor(10**10),torch.exp(-torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) )) 
-        
-        
-            memo[ind_m] = cpu(res).data.numpy()
-        
-            return res
-        else:
-            return            
-        
-def delete(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_Set):
+def abf( z, ld, memo, mean_memo, n_sub, sigma_sq, p0, ind, S):
+    '''
+    Aproximate bayes factor calculation.
+
+    Parameters
+    ----------
+    z : z scores.
+    ld : LD Matrix.
+    memo : Dynamic programming dict.
+    mean_memo : log(exp(constant))
+    n_sub : Number of subjects
+    sigma_sq : Variance
+    p0 : Prior
+    ind : indices of causal configurations
+    S : \Sigma^{-1}z
+
+    '''
+    z = z.unsqueeze(1)
+    ind_m  = tuple(sorted(ind[:]))
+    cc = gpu(torch.ones(len(z)))
+    if len(ind)>0:
+        if ind_m in memo:
+            return memo[ind_m]
     
-        abf(z, ld, memo, n_sub, sigma_sq, p0, st_Set, S)
+        U =  n_sub*torch.diag(sigma_sq*cc)[:,ind]
+        V = ld[ind,:]
+            
+        inv            = torch.inverse(gpu(torch.eye(len(ind))) + torch.mm(V,U))
+            
+        sigma_inv      = torch.mm(torch.mm(U,inv),V)
+            
+        sigma          = gpu(torch.eye(len(ind))) + torch.mm(V,U)
+            
+        sigma2         = torch.matmul(torch.matmul(z.T, sigma_inv),S)/2
+        
+        prior = 1 - p0
+        prior[ind] = p0[ind]
+        ex = -torch.logdet(sigma)/2 + sigma2 + torch.sum(torch.log(prior)) - mean_memo
+        res =  min(torch.tensor(10**15),torch.exp(min(torch.log(torch.tensor(10**15)),ex)))
+    
+    
+        memo[ind_m] = cpu(res).data.numpy()
+    
+        return res
+    else:
+        return 
+        
+def delete(memo, mean_memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_Set):
+    
+        abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, st_Set, S)
     
         K = list(st_Set)
 
@@ -210,11 +229,12 @@ def delete(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_Set):
             kk = K[:]
             kk.pop(i)
             kk = sorted(kk)
-            abf(z, ld, memo, n_sub, sigma_sq, p0, kk,S)
+            abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, kk,S)
         return
 
-def add(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_set):
-        abf(z, ld, memo, n_sub, sigma_sq, p0, st_Set, S)
+def add(memo, mean_memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_set):
+    
+        abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, st_Set, S)
     
         K = list(st_Set)
         for i in search_set:
@@ -223,12 +243,12 @@ def add(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set, search_set):
                 kk.append(i)
             kk = sorted(kk)
             
-            abf(z, ld, memo, n_sub, sigma_sq, p0, kk, S)
+            abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, kk, S)
         return
     
-def change(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set,search_set):
+def change(memo, mean_memo, z, ld, n_sub, sigma_sq, p0, S, st_Set,search_set):
     
-        abf(z, ld, memo, n_sub, sigma_sq, p0, st_Set, S)
+        abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, st_Set, S)
     
         K = list(st_Set)
         
@@ -245,7 +265,7 @@ def change(memo, z, ld, n_sub, sigma_sq, p0, S, st_Set,search_set):
                     kk.pop(rem_id)
                 kk = sorted(kk)
             
-                abf(z, ld, memo, n_sub, sigma_sq, p0, kk, S)
+                abf(z, ld, memo, mean_memo, n_sub, sigma_sq, p0, kk, S)
         return          
     
 def calculate_pip(memo,bp):
@@ -289,7 +309,7 @@ def unique_sets(cred_set, cred_prob):
     x = D
 
 def main(options):
-    ########################################################################################################################################################
+    ###############################################################################################################################################
     
     Z  = gpu_t(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,1].astype(float))
     LD = gpu_t(pd.read_table(options['LD'], sep=' ', header=None).to_numpy())
@@ -305,7 +325,8 @@ def main(options):
         
     sigma_sq =  gpu_ts(options['sigma_sq'])
     bp = len(Z)
-    m = load_object(os.path.join(options['target'],'res'))['memo']
+    m  = load_object(os.path.join(options['target'],'res'))['memo']
+    mean_memo = load_object(os.path.join(options['target'],'res'))['mean_memo']
     
 
     ###############################################################################################################################################
@@ -314,16 +335,16 @@ def main(options):
     prior_n_causal   = min(bp,options['n_causal'] )
     n_sub = options['n_sub']
     allow_dup = options['allow_duplicates']
-    start_set = cond_stepwise_causal(m, pip, prior_n_causal, threshold_causal, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup)
+    start_set = cond_stepwise_causal(m, mean_memo, pip, prior_n_causal, threshold_causal, Z, LD, n_sub, sigma_sq, p0, S, bp, allow_dup)
                     
-    ######################################################
+    ################################################################################################################################################
     
     for ij, ji in enumerate(start_set):
         ss = start_set[:]
         ss.pop(ij)
-        add(m, Z, LD, n_sub, sigma_sq, p0, S,ss, range(bp))
+        add(m, mean_memo, Z, LD, n_sub, sigma_sq, p0, S,ss, range(bp))
 
-    ######################################################
+    #########################################################################################################################################################
     ths = options['coverage_ths']
     prob_ths = options['selection_prob']
     cred_set, cred_prob = find_credible_set(LD, m, start_set, bp, ths, prob_ths, allow_dup, options)
@@ -374,6 +395,11 @@ def main(options):
     plt.close()
                 
         
+        
+        
+        
+        
+
         
         
         
