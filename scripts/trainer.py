@@ -417,7 +417,7 @@ def main(options):
             save_object(res_to_save, os.path.join(options['target'],'res'))
                 
         
-        if (n%100==0 and n>0 and options['plot_loss'])or (n==n_epochs):
+        if (n==(n_epochs//2) and n>0 and options['plot_loss'])or (n==n_epochs):
             real = np.zeros(len(Z))
             if len(options['loc_true'])!=0:
                 real[loc] = 1
