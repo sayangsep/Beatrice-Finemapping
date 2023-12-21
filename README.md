@@ -141,3 +141,4 @@ The following flags can be used to control the performance of BEATRICE:
  - ```--temp_lower_bound```: The temperature variable, $\lambda$, that controls the extent of continuous relaxations (default: 0.01).
  - ```--true_loc```: A comma separated list that contains the index of true causal variants (default: None).
  - ```--allow_dup```: Allow duplicate variants across credible sets (default: False).
+ - ```--neural_network```: A comma separated list that contains the size of each layer of the neural network (default: '10,200,10', First layer has 10 nodes, second layer has 200 nodes and third has 10 nodes'
