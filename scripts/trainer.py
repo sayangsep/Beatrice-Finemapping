@@ -385,7 +385,7 @@ def main(options):
         p_0 = gpu_t(np.array([1/len(Z)]*len(Z)))
 
     # Initialize model.
-    model = gpu(network(len(Z),[1,10,200,10],3,LD,Z)   )
+    model = gpu(network(len(Z),[1]+options['NN'],3,LD,Z)   )
 
     # init optimizer
     opt_j       = optim.Adam(model.parameters(), lr=0.002, betas=(0.9, 0.999), weight_decay=0)

@@ -25,6 +25,8 @@ flags.DEFINE_integer('sparse_concrete', 50, 'Number of non zero locatons of the 
 flags.DEFINE_integer('n_caus', 50, 'Number of causal variants', lower_bound=1)
 flags.DEFINE_list('true_loc', '', 'Index of true causal variants.')
 flags.DEFINE_float('purity', 0, 'Purity')
+flags.DEFINE_list('neural_network', '10,200,10', 'Size of 3-layer neural network. First layer has 10 nodes, second layer has 200 nodes and third has 10 nodes')
+
 
 def main(argv):
     if not os.path.exists(FLAGS.z):
@@ -38,6 +40,7 @@ def main(argv):
     if not os.path.exists(FLAGS.target):
         os.makedirs(FLAGS.target)
     options = {}  
+    options['NN'] = [int(i) for i in FLAGS.neural_network]
     options['purity'] = FLAGS.purity
     options['n_causal'] = FLAGS.n_caus
     options['allow_duplicates'] = FLAGS.allow_dup
