@@ -309,6 +309,7 @@ def unique_sets(cred_set, cred_prob):
     x = D
 
 def main(options):
+    print('GENERATING CREDIBLE SETS\n')
     ###############################################################################################################################################
     
     Z  = gpu_t(pd.read_table(options['z'],  sep=' ', header=None).to_numpy()[:,1].astype(float))
