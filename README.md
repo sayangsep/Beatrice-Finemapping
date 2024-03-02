@@ -126,7 +126,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--N```: Number of subjects (default: 5000).
 - ```--n_caus```: Number of causal variants (default: 50).
 - ```--purity```:The minimum absolute correlation between variants within a credible set (default: 0.0).
-- ```--gamma```: The $\gamma$ threshold creates the reduced space of binary vectors $B^R$ (default: 0.1).
+- ```--gamma```: The $\gamma$ threshold creates the reduced space of binary vectors $B^R$ (default: 0.1). This controls the sparsity of PIPs. A higher values leads to a more conservative sparse set of PIPs.
 - ```--gamma_coverage```: $\gamma_{coverage}$ controls the threshold for coverage (default: 0.95).
 - ```--gamma_key```: $\gamma_{key}$ is the threshold for adding key variants (default: 0.2). This controls the number of credible sets. A higher values leads to less number of credible sets.
 - ```--gamma_selection```: It controls the threshold to add variants to a credible set (default: 0.05). This controls the size of credible sets. A higher value leads to smaller credible sets.
@@ -136,7 +136,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--plot_loss```: Plot neural network training losses (default: 'true').
 - ```--prior_location```:Location to the file where prior probability is stored. The format should be same as the z-file, but instead of z-scores the second column should contain the prior probabilities (default: constant probability ($1/{NumberofVariants}$)).
  - ```--sigma_sq```: Variance of causal variants (default: 0.05).
- - ```--sparse_concrete```: Number of non zero locatons of the concrete random vector at every iteration (default: 50).
+ - ```--sparse_concrete```: Number of non zero locatons of the concrete random vector at every iteration (default: 50). A higher value allows to capture interactions between many variants. It is recommended to keep it high.
  - ```--target```: Location to store results (default: results).
  - ```--temp_lower_bound```: The temperature variable, $\lambda$, that controls the extent of continuous relaxations (default: 0.01).
  - ```--true_loc```: A comma separated list that contains the index of true causal variants (default: None).
