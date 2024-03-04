@@ -2,6 +2,7 @@ from absl import app
 from absl import flags
 import os
 import scripts.trainer as trainer
+import torch
 FLAGS = flags.FLAGS
 
 #  Define Flagg names for inputs.
@@ -39,6 +40,7 @@ def main(argv):
     
     if not os.path.exists(FLAGS.target):
         os.makedirs(FLAGS.target)
+    torch.manual_seed(97)
     options = {}  
     options['NN'] = [int(i) for i in FLAGS.neural_network]
     options['purity'] = FLAGS.purity

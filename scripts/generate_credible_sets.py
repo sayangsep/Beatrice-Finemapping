@@ -99,6 +99,9 @@ def cond_stepwise_causal(M, mean_memo, pip, prior_causal, threshold, Z, LD,\
         
     start_set = sorted(ind[:1])
     
+    if pip[start_set[0]]<threshold:
+        return []
+    
     for nn in range(prior_causal-1):    
         
         add(M, mean_memo, Z, LD, n_sub, sigma_sq, p0, S, sorted(start_set[:]), range(bp))

@@ -318,7 +318,8 @@ def regularize_ld(LD):
     return LD
     
     
-def reformat_memo(memo):
+def reformat_memo(memo, p0):
+    memo[tuple([])] = np.array([[torch.sum(torch.log(1-p0)).data.numpy()]])
     m0 = np.mean([val for val in memo.values()])
     for key in memo:
         memo[key] = min(10**15,np.exp(min(np.log(10**15),memo[key]-m0)))
@@ -411,7 +412,7 @@ def main(options):
         
             
         if n==n_epochs:  
-            mean_memo = reformat_memo(memo)
+            mean_memo = reformat_memo(memo, p_0)
             res_to_save={'loss':Loss,'lik_loss':Loss_lik,'kl_loss':Loss_kl, 'imp':F_map.model.imp,'loc':loc, 'pip':pip,'memo':memo, 'mean_memo':mean_memo}               
             pip = calculate_pip(memo, bp)  
             save_object(res_to_save, os.path.join(options['target'],'res'))
