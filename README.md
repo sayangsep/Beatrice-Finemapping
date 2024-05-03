@@ -124,7 +124,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--z```: Location of Z Score (default: 'example_data/Simulation_data0.z').
 - ```--LD```: Location of LD matrix (default: 'example_data/Simulation_data0.ld').
 - ```--N```: Number of subjects (default: 5000).
-- ```--n_caus```: Number of causal variants (default: 50).
+- ```--n_caus```: Number of causal variants (default: 20).
 - ```--purity```:The minimum absolute correlation between variants within a credible set (default: 0.0).
 - ```--gamma```: The $\gamma$ threshold creates the reduced space of binary vectors $B^R$ (default: 0.1). This controls the sparsity of PIPs. A higher values leads to a more conservative sparse set of PIPs.
 - ```--gamma_coverage```: $\gamma_{coverage}$ controls the threshold for coverage (default: 0.95).
@@ -132,7 +132,7 @@ The following flags can be used to control the performance of BEATRICE:
 - ```--gamma_selection```: It controls the threshold to add variants to a credible set (default: 0.05). This controls the size of credible sets. A higher value leads to smaller credible sets.
 - ```--MCMC_samples```: Number of random samples for MC integration (default: 1).
 - ```--get_cred```: A flag to generate credible sets (default: 'true').
-- ```--max_iter```: Number of training iterations (default: 2001).
+- ```--max_iter```: Number of training iterations (default: 4001).
 - ```--plot_loss```: Plot neural network training losses (default: 'true').
 - ```--prior_location```:Location to the file where prior probability is stored. The format should be same as the z-file, but instead of z-scores the second column should contain the prior probabilities (default: constant probability ($1/{NumberofVariants}$)).
  - ```--sigma_sq```: Variance of causal variants (default: 0.05).
