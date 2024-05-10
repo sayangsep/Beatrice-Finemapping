@@ -13,7 +13,7 @@ flags.DEFINE_string('LD', 'example_data/Simulation_data0.ld', 'Location of LD ma
 flags.DEFINE_string('prior_location', '', 'Location where priors of the underlying probability map of bianry concrete distribution is stored.')
 flags.DEFINE_integer('N', 5000, 'Number of subjects.', lower_bound=0)
 flags.DEFINE_integer('MCMC_samples', 1, 'Number of random samples for MC integration', lower_bound=1)
-flags.DEFINE_integer('max_iter', 4000, 'Number of training iterations.',lower_bound=500)
+flags.DEFINE_integer('max_iter', 2000, 'Number of training iterations.',lower_bound=500)
 flags.DEFINE_boolean('plot_loss', True, 'Plot training losses.')
 flags.DEFINE_boolean('allow_dup', False, 'Allow duplicate variants across credible sets')
 flags.DEFINE_boolean('get_cred', True, 'Get Credible Sets')
