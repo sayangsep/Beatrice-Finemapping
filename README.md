@@ -2,6 +2,8 @@
 
 ### [PAPER (Oxford Bioinformatics)](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/btae590/7808857)
 
+### [Supplementary doc](beatrice_supplementary_doc.pdf)
+
 In this repository, we introduce BEATRICE, a finemapping tool to identify putative causal variants from GWAS summary data. BEATRICE combines a hierarchical Bayesian model with a deep learning-based inference procedure. This combination provides greater inferential power to handle noise and spurious interactions due to polygenicity of the trait, trans-interactions of variants, or varying correlation structure of the genomic region. 
 
 <img src="modular.png" alt="drawing" width="900"/>
